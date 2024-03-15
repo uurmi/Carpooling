@@ -1,0 +1,69 @@
+<div class="container-fluid">
+  <div class="col-md-12 offset-md-1 mt-2">
+    <h2 class="display-1"><strong>SOUSSE <==> TUNIS</strong></h2>
+  </div>
+  <br><br>
+  <div class="col-md-12">
+    <form (ngSubmit)="search()" [formGroup]="searchForm" class="form-check">
+        <div class="card-body">
+          <div class="form-group form-group-feedback form-group-feedback-left form-check-inline">
+            <div class="form-check">
+              <input class="form-control-sm form-check-input"
+                     formControlName="start_city" type="radio" value="Sousse" id="Sousse => Tunis">
+              <label class="form-check-label" for="Sousse => Tunis">Sousse vers Tunis</label>
+            </div>
+            <div class="form-check">
+              <input class="form-control-sm form-check-input"
+                     formControlName="start_city" type="radio" value="Tunis" id="Tunis => Sousse">
+              <label class="form-check-label" for="Tunis => Sousse">Tunis vers Sousse</label>
+            </div>
+            <div class="form-check">
+              <input class="form-control-sm form-check-input"
+                     formControlName="start_city" type="radio" value="All" id="All" [checked]="true">
+              <label class="form-check-label" for="All">Toutes les pubs</label>
+            </div>
+          </div>
+          <button [disabled]="loading" class="btn btn-primary btn-block" type="submit">Search
+            <i class="icon-circle-right2 ml-2"></i></button>
+          <div class="form-control-feedback">
+            <i class="icon-user text-muted"></i>
+          </div>
+        </div>
+    </form>
+    <div>
+      <table class="table table-dark table-bordered table-hover table-responsive">
+        <caption class="card-footer">Cliquez sur une publication pour plus de détails.</caption>
+        <tr>
+
+          <th style="width: 20%">Publiée le</th>
+          <th style="width: 15%">De</th>
+          <th style="width: 15%">Vers</th>
+          <th style="width: 10%">Places</th>
+          <th style="width: 40%">Description</th>
+
+        </tr>
+
+        <tbody *ngIf="!loading">
+        <tr *ngFor="let post of posts | slice: pageSize | slice: 0:itemsPerPage" routerLink="/post/{{post.id}}">
+
+          <td>{{ post.tstart}}</td>
+          <td>{{ post.start_city }}</td>
+          <td>{{ post.finish_city }}</td>
+          <td>{{ post.nb_places}}</td>
+          <td>{{ post.raw }}</td>
+
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <ngb-pagination
+        [directionLinks]="true"
+        [collectionSize]="posts.length" #numPages
+        [pageSize]="itemsPerPage"
+        [(page)]="currentPage"
+        (pageChange)="onPageChange(currentPage)">
+      </ngb-pagination>
+    </div>
+  </div>
+</div>

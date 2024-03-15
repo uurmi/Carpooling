@@ -1,0 +1,17 @@
+th, td {
+  text-align: center;
+}
+
+table {
+  position: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.table-hover > tbody > tr:hover {
+  background-color: black;
+}

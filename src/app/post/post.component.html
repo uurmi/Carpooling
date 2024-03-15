@@ -1,0 +1,124 @@
+<div *ngIf="!loading">
+  <div *ngIf="!editing; then viewBlock else editBlock"></div>
+
+  <ng-template #viewBlock>
+    <div class="d-block p-2 custom" style="position: fixed">
+      <div class="card">
+        <h4 class="card-header" style="text-align: center">ID Publication : {{ post.id }}</h4>
+        <div class="card-body">
+          <div class="d-block p-2">
+            <table class="table table-bordered" style="width: 100%">
+              <tr class="card-header">
+
+                <th style="width: 30%">Publié le</th>
+                <th style="width: 25%">De</th>
+                <th style="width: 25%">Vers</th>
+                <th style="width: 20%">Places</th>
+
+              </tr>
+              <tr>
+
+                <td>{{ post.tstart}}</td>
+                <td>{{ post.start_city }}</td>
+                <td>{{ post.finish_city }}</td>
+                <td>{{ post.nb_places}}</td>
+
+              </tr>
+            </table>
+          </div>
+          <span class="d-block p-2 card-header" style="text-align: center">
+        Description
+      </span>
+          <span class="d-block p-2" style="text-align: center">
+          {{ post.raw }}
+        </span>
+        </div>
+        <div class="card-body" style="text-align: center">
+          <button *ngIf="logged" [disabled]="loading" class="btn btn-primary" (click)="onEdit()">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Modifier la publication
+          </button>
+        </div>
+        <div class="card-body" style="text-align: center">
+          <button *ngIf="logged" [disabled]="loading" class="btn btn-primary" (click)="onDelete()">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Supprimer la publication
+          </button>
+        </div>
+      </div>
+      <div class="card-footer" style="text-align: center">
+        <a routerLink="/dashboard">Retour à l'accueil</a>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #editBlock>
+    <div class="d-block p-2 custom" style="position: fixed">
+      <form [formGroup]="editForm" (ngSubmit)="onFinish()">
+        <div class="card">
+          <h4 class="card-header" style="text-align: center">ID Publication : {{ post.id }}</h4>
+          <div class="card-body">
+            <div class="d-block p-2">
+              <table class="table table-bordered" style="width: 100%">
+                <tr class="card-header">
+
+                  <th style="width: 30%">Publié le</th>
+                  <th style="width: 25%">De</th>
+                  <th style="width: 25%">Vers</th>
+                  <th style="width: 20%">Places</th>
+
+                </tr>
+                <tr>
+
+                  <td>
+                    <div class="form-group">
+                      <input type="text" value="{{ post.tstart }}" formControlName="tstart"
+                             class="form-control"/>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <input type="text" value="{{ post.start_city }}" formControlName="start_city"
+                             class="form-control"/>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <input type="text" value="{{ post.finish_city }}" formControlName="finish_city"
+                             class="form-control"/>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <input type="text" value="{{ post.nb_places }}" formControlName="nb_places"
+                             class="form-control"/>
+                    </div>
+                  </td>
+
+                </tr>
+              </table>
+            </div>
+            <span class="d-block p-2 card-header" style="text-align: center">
+        Description
+      </span>
+            <span class="d-block p-2" style="text-align: center">
+          {{ post.raw }}
+        </span>
+          </div>
+          <div class="card-body" style="text-align: center">
+            <button class="btn btn-primary" type="submit" (click)="onFinish()" style="margin-right: 5px">
+              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+              Sauvegarder
+            </button>
+            <button class="btn btn-primary" type="reset" (click)="onCancel()">
+              Annuler
+            </button>
+          </div>
+        </div>
+        <div class="card-footer" style="text-align: center">
+          <a routerLink="/dashboard">Retour à l'accueil</a>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+</div>
